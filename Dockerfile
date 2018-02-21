@@ -87,6 +87,8 @@ ADD ./logstash-init /etc/init.d/logstash
 RUN sed -i -e 's#^LS_HOME=$#LS_HOME='$LOGSTASH_HOME'#' /etc/init.d/logstash \
  && chmod +x /etc/init.d/logstash
 
+### Install Logstash plugins
+RUN gosu logstash ${LOGSTASH_HOME}/bin/logstash-plugin install logstash-input-http
 
 ### install Kibana
 
@@ -123,10 +125,11 @@ RUN cp ${ES_HOME}/config/log4j2.properties ${ES_HOME}/config/jvm.options \
  && chown -R elasticsearch:elasticsearch ${ES_PATH_CONF} \
  && chmod -R +r ${ES_PATH_CONF}
 
+
 ### configure Logstash
 
 # filters
-ADD ./02-beats-input.conf ${LOGSTASH_PATH_CONF}/conf.d/02-beats-input.conf
+ADD ./02-http-input.conf ${LOGSTASH_PATH_CONF}/conf.d/02-http-input.conf
 ADD ./10-syslog.conf ${LOGSTASH_PATH_CONF}/conf.d/10-syslog.conf
 ADD ./11-nginx.conf ${LOGSTASH_PATH_CONF}/conf.d/11-nginx.conf
 ADD ./30-output.conf ${LOGSTASH_PATH_CONF}/conf.d/30-output.conf

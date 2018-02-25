@@ -38,6 +38,7 @@ LS_CONF_DIR=/etc/logstash/conf.d
 LS_OPEN_FILES=16384
 LS_NICE=19
 LS_OPTS=
+KEYTOOLPASS=changeme
 
 [ -r /etc/default/$name ] && . /etc/default/$name
 [ -r /etc/sysconfig/$name ] && . /etc/sysconfig/$name
@@ -52,6 +53,8 @@ start() {
   ## from starting
   #JAVA_OPTS=${LS_JAVA_OPTS}
   #export PATH HOME JAVA_OPTS LS_HEAP_SIZE LS_JAVA_OPTS LS_USE_GC_LOGGING
+  openssl pkcs12 -export -out keystore.p12 -name do-whale-01 -inkey /etc/nginx/certs/do-whale-01.rl.cm/key.pem -in /etc/nginx/certs/do-whale-01.rl.cm/cert.pem -certfile /etc/nginx/certs/do-whale-01.rl.cm/chain.pem -password pass:${KEYTOOLPASS}
+  keytool -importkeystore -srckeystore keystore.p12 -srcstorepass ${KEYTOOLPASS} -srckeypass ${KEYTOOLPASS} -destkeystore keystore.jks -deststorepass ${KEYTOOLPASS} -alias do-whale-01 -noprompt
   
   export PATH HOME LS_HEAP_SIZE LS_JAVA_OPTS LS_USE_GC_LOGGING
 
@@ -75,8 +78,6 @@ start() {
 
   echo "$name started."
 
-  openssl pkcs12 -export -out keystore.p12 -name do-whale-01 -inkey /etc/nginx/certs/do-whale-01.rl.cm/key.pem -in /etc/nginx/certs/do-whale-01.rl.cm/cert.pem -certfile /etc/nginx/certs/do-whale-01.rl.cm/chain.pem -password pass:changeme
-  keytool -importkeystore -destkeystore keystore.jks -srckeystore keystore.p12 -alias do-whale-01
 
   return 0
 }

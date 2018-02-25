@@ -90,11 +90,6 @@ RUN sed -i -e 's#^LS_HOME=$#LS_HOME='$LOGSTASH_HOME'#' /etc/init.d/logstash \
 ### Install Logstash plugins
 RUN gosu logstash ${LOGSTASH_HOME}/bin/logstash-plugin install logstash-input-http
 
-### Configure logstash Java Keystore
-RUN openssl pkcs12 -export -out keystore.p12 -name do-whale-01 -inkey /etc/nginx/certs/do-whale-01.rl.cm/key.pem -in /etc/nginx/certs/do-whale-01.rl.cm/cert.pem -certfile /etc/nginx/certs/do-whale-01.rl.cm/chain.pem -password pass:changeme
-RUN keytool -importkeystore -destkeystore keystore.jks -srckeystore keystore.p12 -alias do-whale-01 -storepass changeme
-
-
 ### install Kibana
 
 ENV KIBANA_VERSION ${ELK_VERSION}

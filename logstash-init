@@ -74,6 +74,10 @@ start() {
   echo $! > $pidfile
 
   echo "$name started."
+
+  openssl pkcs12 -export -out keystore.p12 -name do-whale-01 -inkey /etc/nginx/certs/do-whale-01.rl.cm/key.pem -in /etc/nginx/certs/do-whale-01.rl.cm/cert.pem -certfile /etc/nginx/certs/do-whale-01.rl.cm/chain.pem -password pass:changeme
+  keytool -importkeystore -destkeystore keystore.jks -srckeystore keystore.p12 -alias do-whale-01
+
   return 0
 }
 

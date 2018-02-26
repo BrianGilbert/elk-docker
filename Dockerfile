@@ -40,6 +40,7 @@ RUN set -x \
 
 
 ENV ELK_VERSION 6.2.1
+ENV ES_SG_VERSION 6.2.1-21.0
 
 ### install Elasticsearch
 
@@ -63,6 +64,7 @@ ADD ./elasticsearch-init /etc/init.d/elasticsearch
 RUN sed -i -e 's#^ES_HOME=$#ES_HOME='$ES_HOME'#' /etc/init.d/elasticsearch \
  && chmod +x /etc/init.d/elasticsearch
 
+RUN CONF_DIR=${ES_PATH_CONF} gosu elasticsearch ${ES_HOME}/bin/elasticsearch-plugin install -b com.floragunn:search-guard-6:${ES_SG_VERSION}
 
 ### install Logstash
 

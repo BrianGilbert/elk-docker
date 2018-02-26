@@ -87,3 +87,13 @@ network.host: 0.0.0.0
 # Require explicit names when deleting indices:
 #
 #action.destructive_requires_name: true
+#
+# ---------------------------------- Searchguard -----------------------------------
+searchguard.ssl.transport.pemcert_filepath: /etc/nginx/certs/${LETSENCRYPT_HOST}/fullchain.pem
+searchguard.ssl.transport.pemkey_filepath: /etc/nginx/certs/${LETSENCRYPT_HOST}/key.pem
+#searchguard.ssl.transport.pemkey_password: <key_password (optional)>
+searchguard.ssl.transport.pemtrustedcas_filepath: /etc/nginx/certs/${LETSENCRYPT_HOST}/chain.pem
+searchguard.ssl.transport.enforce_hostname_verification: true
+
+searchguard.authcz.admin_dn:
+  - CN=do-whale-01.rl.cm,OU=ELK,O=Realityloop,L=Melbourne, ST=Victoria C=AU

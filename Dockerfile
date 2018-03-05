@@ -89,6 +89,9 @@ RUN sed -i -e 's#^LS_HOME=$#LS_HOME='$LOGSTASH_HOME'#' /etc/init.d/logstash \
 
 ### Install Logstash plugins
 RUN gosu logstash ${LOGSTASH_HOME}/bin/logstash-plugin install logstash-input-http
+RUN gosu logstash ${LOGSTASH_HOME}/bin/logstash-plugin install logstash-codec-json
+RUN gosu logstash ${LOGSTASH_HOME}/bin/logstash-plugin install logstash-filter-json
+RUN gosu logstash ${LOGSTASH_HOME}/bin/logstash-plugin install logstash-filter-mutate
 
 ### install Kibana
 

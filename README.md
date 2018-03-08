@@ -6,7 +6,7 @@ This Docker image provides a convenient centralised log server and log managemen
 
 ### Docker Hub
 
-This image is hosted on Docker Hub at [https://hub.docker.com/r/growen/elk/](https://hub.docker.com/r/growen/elk/).
+This image is hosted on Docker Hub at [https://hub.docker.com/r/growen/elk/](https://hub.docker.com/r/briangilbert/elk/).
 
 The following tags are available:
 

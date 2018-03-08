@@ -1,0 +1,8 @@
+# Drupal watchdog pattern for logstash grok filter
+# - based on https://gist.github.com/Synchro/5917252:
+#
+# See: https://events.drupal.org/dublin2016/sessions/building-high-available-elk-drupal
+#
+WATCHDOG https?://%{HOSTNAME:drupal_vhost}\|%{NUMBER:drupal_timestamp}\|(?<drupal_action>[^\|]*)\|%{IP:drupal_ip}\|(?<drupal_request_uri>[^\|]*)\|(?<drupal_referer>[^\|]*)\|(?<drupal_uid>[^\|]*)\|(?<drupal_link>[^\|]*)\|(?<drupal_message>.*)
+#
+SYSLOGWATCHDOG %{SYSLOGTIMESTAMP:logdate} %{IPORHOST:logsource} %{SYSLOGHOST:syslogprog}: %{WATCHDOG}

@@ -132,13 +132,16 @@ RUN cp ${ES_HOME}/config/log4j2.properties ${ES_HOME}/config/jvm.options \
 ### configure Logstash
 
 # filters
-ADD ./02-http-input.conf ${LOGSTASH_PATH_CONF}/conf.d/02-http-input.conf
-ADD ./10-syslog.conf ${LOGSTASH_PATH_CONF}/conf.d/10-syslog.conf
-ADD ./11-nginx.conf ${LOGSTASH_PATH_CONF}/conf.d/11-nginx.conf
-ADD ./30-output.conf ${LOGSTASH_PATH_CONF}/conf.d/30-output.conf
+ADD ./filters/02-http-input.conf ${LOGSTASH_PATH_CONF}/conf.d/02-http-input.conf
+ADD ./filters/10-syslog.conf ${LOGSTASH_PATH_CONF}/conf.d/10-syslog.conf
+ADD ./filters/11-nginx.conf ${LOGSTASH_PATH_CONF}/conf.d/11-nginx.conf
+ADD ./filters/12-drupal-watchdog.conf ${LOGSTASH_PATH_CONF}/conf.d/12-drupal-watchdog.conf
+ADD ./filters/13-drupal-causeview.conf ${LOGSTASH_PATH_CONF}/conf.d/13-drupal-causeview.conf
+ADD ./filters/30-output.conf ${LOGSTASH_PATH_CONF}/conf.d/30-output.conf
 
 # patterns
-ADD ./nginx.pattern ${LOGSTASH_HOME}/patterns/nginx
+ADD ./patterns/nginx.pattern ${LOGSTASH_HOME}/patterns/nginx
+ADD ./patterns/watchdog.pattern ${LOGSTASH_HOME}/patterns/watchdog
 RUN chown -R logstash:logstash ${LOGSTASH_HOME}/patterns
 
 # Fix permissions
